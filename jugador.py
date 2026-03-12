@@ -21,11 +21,17 @@ class Jugador(pygame.sprite.Sprite):
         self.velocidad_y = 0
         self.gravedad = 0.5
 
-    def update(self, teclas, plataformas):
+    def update(self, teclas, plataformas, enemigos):
         if teclas[pygame.K_LEFT]:
             self.rect.x -= self.velocidad_x
         if teclas[pygame.K_RIGHT]:
             self.rect.x += self.velocidad_x
+        
+        # Limites horizontales
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > 800:
+            self.rect.right = 800
         
         # Salto
         if teclas[pygame.K_SPACE]:
@@ -41,7 +47,7 @@ class Jugador(pygame.sprite.Sprite):
         self.velocidad_y += self.gravedad
         self.rect.y += self.velocidad_y
 
-        # Colisiones
+        # Colisiones con plataformas
         colisiones = pygame.sprite.spritecollide(self, plataformas, False)
         for plataforma in colisiones:
             if self.velocidad_y > 0:  # Cayendo - aterrizar encima
@@ -51,3 +57,14 @@ class Jugador(pygame.sprite.Sprite):
                 self.rect.top = plataforma.rect.bottom
                 self.velocidad_y = 0  # Detener el salto
             break  # Solo necesita una colisión
+
+        # Colisiones con enemigos
+        colisiones_enemigos = pygame.sprite.spritecollide(self, enemigos, False)
+        puntos_ganados = 0
+        for enemigo in colisiones_enemigos:
+            if self.velocidad_y > 0 and self.rect.bottom <= enemigo.rect.top + 20:
+                puntos_ganados += 100
+                enemigo.kill()
+                # self.velocidad_y = -8  # Pequeño rebote al aplastar
+        
+        return puntos_ganados

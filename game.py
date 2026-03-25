@@ -38,6 +38,11 @@ class Juego:
             # Puntaje del jugador
             self.puntaje += puntos_ganados
 
+            # Verificar si no hay enemigos y crear uno nuevo
+            if len(self.enemigos) == 0:
+                nuevo_enemigo = Enemigo()
+                self.enemigos.add(nuevo_enemigo)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

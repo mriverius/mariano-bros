@@ -1,17 +1,19 @@
 import pygame
+import random
 
 class Enemigo(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
     
         self.frames = [
-            pygame.transform.scale(pygame.image.load("assets/vegeta.jpg").convert_alpha(), (150, 150)),
+            pygame.transform.scale(pygame.image.load("assets/vegeta.jpg").convert_alpha(), (80, 80)),
         ]
 
         self.image = self.frames[0]
         self.rect = self.image.get_rect()
-        self.rect.x = 500
-        self.rect.y = 100
+        self.rect.x = random.randint(50, 650)
+        self.rect.y = 400
+        print(f"Nuevo enemigo creado en posición x={self.rect.x}")
         
         self.velocidad_x = 2
 

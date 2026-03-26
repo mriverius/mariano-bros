@@ -6,7 +6,7 @@ class Enemigo(pygame.sprite.Sprite):
         super().__init__()
     
         self.frames = [
-            pygame.transform.scale(pygame.image.load("assets/vegeta.jpg").convert_alpha(), (80, 80)),
+            pygame.transform.scale(pygame.image.load("assets/gokuss1.png").convert_alpha(), (80, 80)),
         ]
 
         self.image = self.frames[0]
